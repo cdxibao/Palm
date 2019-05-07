@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1a9bd0</color>
+    <color name="colorPrimaryDark">#1a9bd0</color>
+    <color name="colorAccent">#ff009688</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="red">#FF0000</color>
+    <color name="article_title">#3D3F40</color>
+    <color name="article_content">#757575</color>
+    <color name="circle_gray">#A5A5A5</color>
+    <color name="line">#ddd</color>
+    <color name="main_bg">#EFEFF4</color>
+    <color name="main_left_menu_icon">#61c883</color>
+    <color name="transparent">#00000000</color>
+    <color name="user_card_bg">#1a9bd0</color>
+    <color name="main_left_logo_bg">#d35400</color>
+    <color name="btn_send_msg_bg">#A1B5B5B5</color>
+    <color name="item_1">#cce3ec</color>
+    <color name="item_2">#c4e3f9</color>
+    <color name="item3">#e4e2e5</color>
+
+    <color name="login_button_normal">#1a9bd0</color>
+    <color name="login_button_pressed">#3EADEB</color>
+
+    <color name="bottom_button_normal">#19aab8</color>
+    <color name="bottom_button_pressed">#3EADEB</color>
+
+    <color name="login_button_unable">#D6D6D6</color>
+
+    <color name="code_unable_get">#aaaaaa</color>
+    <color name="confirm_dialog_text">#333333</color>
+
+    <!-- PickerView -->
+    <color name="pickerview_timebtn_nor">#057dff</color>
+    <color name="pickerview_timebtn_pre">#c2daf5</color>
+    <color name="pickerview_bg_topbar">@color/white</color>
+    <color name="pickerview_topbar_title">#000000</color>
+    <color name="bgColor_overlay">#60000000</color>
+
+    <!-- 首页模块背景色 -->
+    <color name="module_1">#c3a997</color>
+    <color name="module_2">#0ca3d0</color>
+    <color name="module_3">#05c7a5</color>
+    <color name="module_4">#d76d93</color>
+    <color name="module_5">#01b8d7</color>
+    <color name="module_6">#e67e22</color>
+    <color name="module_7">#61c883</color>
+    <color name="module_8">#61c883</color>
+    <color name="module_9">#01b8d7</color>
+    <color name="module_10">#05c7a5</color>
+
+    <!-- 网页加载进度条颜色变化 -->
+    <color name="progress1">#F45050</color>
+    <color name="progress2">#F2F2F2</color>
+    <color name="progress3">#FFFFFF</color>
+
+    <color name="fbutton_default_color">#3eadeb</color>
+    <color name="fbutton_default_shadow_color">#ff3493c8</color>
+    //Color Swatches provided by http://designmodo.github.io/Flat-UI/
+    <color name="fbutton_color_turquoise">#1abc9c</color>
+    <color name="fbutton_color_green_sea">#16a085</color>
+    <color name="fbutton_color_emerald">#2ecc71</color>
+    <color name="fbutton_color_nephritis">#27ae60</color>
+    <color name="fbutton_color_peter_river">#3498db</color>
+    <color name="fbutton_color_belize_hole">#2980b9</color>
+    <color name="fbutton_color_amethyst">#9b59b6</color>
+    <color name="fbutton_color_wisteria">#8e44ad</color>
+    <color name="fbutton_color_wet_asphalt">#34495e</color>
+    <color name="fbutton_color_midnight_blue">#2c3e50</color>
+    <color name="fbutton_color_sun_flower">#f1c40f</color>
+    <color name="fbutton_color_orange">#f39c12</color>
+    <color name="fbutton_color_carrot">#e67e22</color>
+    <color name="fbutton_color_pumpkin">#d35400</color>
+    <color name="fbutton_color_alizarin">#e74c3c</color>
+    <color name="fbutton_color_pomegranate">#c0392b</color>
+    <color name="fbutton_color_clouds">#ecf0f1</color>
+    <color name="fbutton_color_silver">#bdc3c7</color>
+    <color name="fbutton_color_concrete">#95a5a6</color>
+    <color name="fbutton_color_asbestos">#7f8c8d</color>
+    <color name="fbutton_color_transparent">@android:color/transparent</color>
+    <color name="success">#11CD6E</color>
+    <color name="failed">#EB4F38</color>
+
+</resources>

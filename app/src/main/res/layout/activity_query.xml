@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:layout_gravity="start"
+    android:orientation="vertical"
+    android:paddingTop="0dp">
+
+    <include layout="@layout/view_toolbar" />
+    <org.kteam.palm.common.view.ElasticScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:fadingEdge="none"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="30dp"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/btn_yanglao_pay_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp">
+                <org.kteam.palm.common.view.RoundImageView
+                    android:id="@+id/iv_yanglao_pay_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    app:imageType="corner_image"
+                    app:borderColor="@color/fbutton_color_concrete"
+                    android:src="@mipmap/banner01"
+                    android:scaleType="centerCrop"
+                    app:border="0.1dp"
+                    app:cornerRadius="5dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/btn_yiliao_pay_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp">
+                <org.kteam.palm.common.view.RoundImageView
+                    android:id="@+id/iv_yiliao_pay_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    app:imageType="corner_image"
+                    app:borderColor="@color/fbutton_color_concrete"
+                    android:src="@mipmap/banner02"
+                    android:scaleType="centerCrop"
+                    app:border="0.1dp"
+                    app:cornerRadius="5dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/btn_user_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp">
+                <org.kteam.palm.common.view.RoundImageView
+                    android:id="@+id/iv_user_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    app:imageType="corner_image"
+                    app:borderColor="@color/fbutton_color_concrete"
+                    android:src="@mipmap/banner03"
+                    android:scaleType="centerInside"
+                    app:border="0.1dp"
+                    app:cornerRadius="5dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/btn_pension_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp">
+                <org.kteam.palm.common.view.RoundImageView
+                    android:id="@+id/iv_pension_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    app:imageType="corner_image"
+                    app:borderColor="@color/fbutton_color_concrete"
+                    android:src="@mipmap/banner04"
+                    android:scaleType="centerCrop"
+                    app:border="0.1dp"
+                    app:cornerRadius="5dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+    </org.kteam.palm.common.view.ElasticScrollView>
+</LinearLayout>

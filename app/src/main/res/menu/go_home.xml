@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_home"
+        android:orderInCategory="90"
+        android:title="@string/home"
+        android:icon="@null"
+        app:showAsAction="ifRoom|withText"
+        android:textSize="16dp"
+        android:textColor="@color/white"/>
+
+</menu>

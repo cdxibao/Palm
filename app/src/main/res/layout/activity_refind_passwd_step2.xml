@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/main_bg"
+    android:layout_gravity="start"
+    android:orientation="vertical"
+    android:paddingTop="0dp">
+
+    <include layout="@layout/view_toolbar" />
+
+    <org.kteam.palm.common.view.ElasticScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:fadingEdge="none"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:layout_weight="1">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/line"/>
+            <TableRow
+                android:id="@+id/layout_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:background="@color/white"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="right"
+                    android:text="@string/tel_num"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="15dp"
+                    style="@style/edit_text_unline"
+                    android:inputType="number"
+                    android:layout_weight="1"
+                    android:textColorHint="@color/line"
+                    android:background="@null"
+                    android:textSize="16dp" />
+            </TableRow>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@drawable/line_padding_left_15"/>
+            <TableRow
+                android:id="@+id/layout_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+                android:paddingRight="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="right"
+                    android:text="@string/auth_code"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16dp" />
+
+                <EditText
+                    android:id="@+id/et_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="15dp"
+                    style="@style/edit_text_unline"
+                    android:layout_weight="1"
+                    android:hint="@string/message_auth_code"
+                    android:textColorHint="@color/line"
+                    android:background="@null"
+                    android:textSize="16dp" />
+                <Button
+                    android:id="@+id/btn_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:text="@string/get_msg_code"
+                    android:padding="5dp"
+                    android:textColor="@color/article_content"
+                    android:textSize="12dp"
+                    android:background="@mipmap/reg_bt"/>
+            </TableRow>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@drawable/line_padding_left_15"/>
+            <TableRow
+                android:id="@+id/layout_passwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+                android:paddingRight="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="right"
+                    android:text="@string/passwd"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16dp" />
+
+                <EditText
+                    android:id="@+id/et_passwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="15dp"
+                    style="@style/edit_text_unline"
+                    android:layout_weight="1"
+                    android:hint="@string/tip_passwd"
+                    android:textColorHint="@color/line"
+                    android:background="@null"
+                    android:inputType="textPassword"
+                    android:textSize="16dp" />
+                <org.kteam.palm.common.view.SwitchButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sb_pwd"
+                    app:switchOnBg="@mipmap/switch_bg_switch"
+                    app:switchOffBg="@mipmap/switch_bg_switch"
+                    app:slipBtn="@mipmap/switch_button"/>
+            </TableRow>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line"/>
+            <Button
+                android:id="@+id/btn_ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="50dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/login_button_selector"
+                android:text="@string/ok"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+        </TableLayout>
+    </org.kteam.palm.common.view.ElasticScrollView>
+</LinearLayout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- volley image 扩展 -->
+    <attr name="default_image" format="reference" />
+    <attr name="error_image" format="reference" />
+    <attr name="animate_changes" format="boolean" />
+    <attr name="in_animation" format="reference" />
+    <attr name="out_animation" format="reference" />
+
+    <declare-styleable name="AnimateNetworkImageView">
+        <attr name="default_image" />
+        <attr name="error_image" />
+    </declare-styleable>
+
+    <declare-styleable name="AnimateImageView">
+        <attr name="animate_changes" />
+        <attr name="in_animation" />
+        <attr name="out_animation" />
+    </declare-styleable>
+
+
+    <attr name="cornerRadius" format="dimension" />
+    <attr name="border" format="dimension" />
+    <attr name="borderColor" format="color"/>
+    <attr name="imageType">
+        <enum name="circle_image" value="0" />
+        <enum name="corner_image" value="1" />
+    </attr>
+    <declare-styleable name="RoundImageView">
+        <attr name="border" />
+        <attr name="borderColor"/>
+        <attr name="cornerRadius" />
+        <attr name="imageType" />
+    </declare-styleable>
+
+    <declare-styleable name="elastic_scroll">
+        <attr name="elasticId" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="wheelview">
+        <attr name="gravity">
+            <enum name="center" value="17"/>
+            <enum name="left" value="3"/>
+            <enum name="right" value="5"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="SwitchButton">
+        <attr name="switchOnBg" format="reference|color"/>
+        <attr name="switchOffBg" format="reference|color"/>
+        <attr name="slipBtn" format="reference|color"/>
+    </declare-styleable>
+
+    <declare-styleable name="TipTextView">
+        <attr name="leftIcon" format="reference|color"/>
+    </declare-styleable>
+</resources>

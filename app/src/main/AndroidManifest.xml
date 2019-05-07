@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.kteam.palm" >
+
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <!-- renren sso Permission for Unit Test -->
+    <!-- QQ、QQ空间所需权限 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+
+    <application
+        android:name=".BaseApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".SplashActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity" android:launchMode="singleTask" android:screenOrientation="portrait" />
+        <activity android:name=".activity.LoginActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.RegisterStep1Activity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.RegisterStep2Activity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.UserInfoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ArticleActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ArticleListActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.RefindPasswdStep1Activity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.RefindPasswdStep2Activity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.YanglaoAccountActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.YanglaoJgsfAccountActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.IDCardBindActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.PersonalPayYanglaoActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity android:name=".activity.PersonalPayInfoYanglaoActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.PayYanglaoCalResultActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.UpdateUserInfoActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.UpdatePasswdActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.IDCardUnBindActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.PayActivity" android:screenOrientation="portrait"  android:configChanges="orientation|keyboardHidden" android:excludeFromRecents="true" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".activity.PersonalUserPayTypeActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.PersonalPayTypeActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.PersonalPayYiliaoActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.PersonalPayInfoYiliaoActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.PensionInfoActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.AccountYearActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.QueryTypeActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.QueryYiliaoActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.QueryYanglaoActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.QueryYanglaoJgsfActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.PayTypeActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.ArticleTypeActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.OrderListActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.OrderInfoActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.AdDetailActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.NewInsuredTypeActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.NewYiliaoInsuredActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity android:name=".activity.NewYanglaoInsuredActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity android:name=".activity.PayYiliaoCalResultActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.PayResultActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.YiliaoPayHistoryActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.YiliaoPayHistoryInfoActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.YanglaoInfoJgsfActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.QueryYanglaoAccountInfoActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.ICBCPayActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.CcbFaceActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.CcbWebViewActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.intsig.idcardscan.sdk.ISCardScanActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.BmServiceActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.BmIntroActivity" android:screenOrientation="portrait" />
+
+        <!-- 工行 -->
+        <service
+            android:name="com.icbc.paysdk.ICBCAPI" >
+        </service>
+        <activity
+            android:name="com.icbc.paysdk.webview.PayWebView"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:imeOptions="actionSend|flagNoEnterAction"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
+
+        <!-- tencent -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1105214427" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <uses-library
+            android:name="com.google.android.maps"
+            android:required="false" />
+        <uses-library android:name="android.test.runner" />
+
+        <!-- wechat callback-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="56f788d967e58e021a0008c6" >
+        </meta-data>
+
+    </application>
+
+</manifest>
