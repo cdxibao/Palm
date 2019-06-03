@@ -114,36 +114,6 @@ public class PersonalPayYanglaoActivity extends BaseActivity implements View.OnC
         }
         mUserInfoView.hidePhoneAndAddress();
 
-        List<BaseData> levelList = (ArrayList) mBaseDataManager.getPayedLevel();
-        mPvOptionsLevel = new OptionsPickerView<BaseData>(this);
-        if (levelList != null && levelList.size() > 0) {
-            if (levelList.size() >= 3) {
-                mPvOptionsLevel.setPicker(new ArrayList<BaseData>(levelList));
-                mPvOptionsLevel.setSelectOptions(2);
-                BaseData baseData = levelList.get(2);
-                mSetPayLevel.setTextWidth((int) ViewUtils.getTextViewLength(mSetPayLevel.getTextView().getPaint(), baseData.label) + ViewUtils.dip2px(PersonalPayYanglaoActivity.this, 15));
-                mSetPayLevel.setText(baseData.label);
-                mSetPayLevel.setTag(baseData);
-            } else if (levelList.size() > 0) {
-                mPvOptionsLevel.setPicker(new ArrayList<BaseData>(levelList));
-                mPvOptionsLevel.setSelectOptions(0);
-                BaseData baseData = levelList.get(0);
-                mSetPayLevel.setTextWidth((int) ViewUtils.getTextViewLength(mSetPayLevel.getTextView().getPaint(), baseData.label) + ViewUtils.dip2px(PersonalPayYanglaoActivity.this, 15));
-                mSetPayLevel.setText(baseData.label);
-                mSetPayLevel.setTag(baseData);
-            }
-        }
-
-        mPvOptionsLevel.setCyclic(false);
-        mPvOptionsLevel.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-                BaseData baseData = mPvOptionsLevel.getmOptions1Items().get(options1);
-                mSetPayLevel.setText(baseData.label);
-                mSetPayLevel.setTag(baseData);
-            }
-        });
-
         findViewById(R.id.btn_pay_calculate).setOnClickListener(this);
     }
 
@@ -315,6 +285,41 @@ public class PersonalPayYanglaoActivity extends BaseActivity implements View.OnC
 //                    mTvInsuranceOrg.setText(mPayInfo.groupid);
                     mTvPayYear.setText(getString(R.string.year, mPayInfo.zac001));
                     mTvPayBeginMonth.setText(getString(R.string.month, mPayInfo.zac002));
+
+                    try {
+                        List<BaseData> levelList = (ArrayList) mBaseDataManager.getPayedLevel(Integer.parseInt(mPayInfo.zac002) >= 5);
+                        mPvOptionsLevel = new OptionsPickerView<BaseData>(PersonalPayYanglaoActivity.this);
+                        if (levelList != null && levelList.size() > 0) {
+                            if (levelList.size() >= 3) {
+                                mPvOptionsLevel.setPicker(new ArrayList<BaseData>(levelList));
+                                mPvOptionsLevel.setSelectOptions(2);
+                                BaseData baseData = levelList.get(2);
+                                mSetPayLevel.setTextWidth((int) ViewUtils.getTextViewLength(mSetPayLevel.getTextView().getPaint(), baseData.label) + ViewUtils.dip2px(PersonalPayYanglaoActivity.this, 15));
+                                mSetPayLevel.setText(baseData.label);
+                                mSetPayLevel.setTag(baseData);
+                            } else if (levelList.size() > 0) {
+                                mPvOptionsLevel.setPicker(new ArrayList<BaseData>(levelList));
+                                mPvOptionsLevel.setSelectOptions(0);
+                                BaseData baseData = levelList.get(0);
+                                mSetPayLevel.setTextWidth((int) ViewUtils.getTextViewLength(mSetPayLevel.getTextView().getPaint(), baseData.label) + ViewUtils.dip2px(PersonalPayYanglaoActivity.this, 15));
+                                mSetPayLevel.setText(baseData.label);
+                                mSetPayLevel.setTag(baseData);
+                            }
+                        }
+
+                        mPvOptionsLevel.setCyclic(false);
+                        mPvOptionsLevel.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+                            @Override
+                            public void onOptionsSelect(int options1, int option2, int options3) {
+                                BaseData baseData = mPvOptionsLevel.getmOptions1Items().get(options1);
+                                mSetPayLevel.setText(baseData.label);
+                                mSetPayLevel.setTag(baseData);
+                            }
+                        });
+                    } catch (Exception e) {
+                        mLogger.error(e.getMessage(), e);
+                    }
+
                     try {
                         mBaseDataManager = new BaseDataManager();
                         ArrayList<BaseData> monthList = (ArrayList) mBaseDataManager.getMonthList(mPayInfo.zac002);

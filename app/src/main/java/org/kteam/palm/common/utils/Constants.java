@@ -101,7 +101,8 @@ public class Constants {
     public static final String FIRST_SOURCE = "0002";
 
     public static final String PAY_MONTH_KEY = "CSA001";
-    public static final String PAY_LEVEL_KEY = "ZAC100";
+    public static final String PAY_LOW_LEVEL_KEY = "ZAC100";
+    public static final String PAY_HIGH_LEVEL_KEY = "ZAC200";
     public static final String PAY_YILIAO_INSURCED_LEVEL_KEY = "AAZ289";
     public static final String PAY_NATION_KEY = "AAC005";
     public static final String PAY_TYPE_KEY = "cust_order_pay_status";

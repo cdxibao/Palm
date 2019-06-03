@@ -24,6 +24,12 @@ public interface BaseDataRepository extends BaseRepository {
     /**缴费档次*/
     List<BaseData> getPayedLevel();
 
+    /**
+     * 缴费档次
+     * @param levelKey 当获取的开始月度小于等于4时，去获取档次信息就传ZAC100；当获取的开始月度大于等于5时，去获取档次信息就传ZAC200
+     */
+    List<BaseData> getPayedLevel(String levelKey);
+
     /**医疗保险新参保缴费档次*/
     List<BaseData> getYiliaoInsuredPayedLevel();
 

@@ -82,7 +82,18 @@ public class BaseDataRepositoryImpl extends BaseRepositoryImpl implements BaseDa
     public List<BaseData> getPayedLevel() {
         List<BaseData> resultList = null;
         try {
-            Where<BaseData, Integer> where = mDao.queryBuilder().where().eq(BaseData.COLUMN_TYPE, Constants.PAY_LEVEL_KEY);
+            Where<BaseData, Integer> where = mDao.queryBuilder().where().eq(BaseData.COLUMN_TYPE, Constants.PAY_LOW_LEVEL_KEY);
+            resultList = where.query();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return resultList;
+    }
+
+    public List<BaseData> getPayedLevel(String levelKey) {
+        List<BaseData> resultList = null;
+        try {
+            Where<BaseData, Integer> where = mDao.queryBuilder().where().eq(BaseData.COLUMN_TYPE, levelKey);
             resultList = where.query();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

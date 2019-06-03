@@ -61,7 +61,7 @@ public class BaseData implements Serializable {
                     label += "月";
                 }
             }
-        } else if (Constants.PAY_LEVEL_KEY.equals(type)) {
+        } else if (Constants.PAY_LOW_LEVEL_KEY.equals(type)) {
             if (!TextUtils.isEmpty(label)) {
                 if (!label.contains("档")) {
                     label += "档";

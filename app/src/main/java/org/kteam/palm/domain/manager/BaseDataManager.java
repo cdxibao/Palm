@@ -160,6 +160,31 @@ public class BaseDataManager {
         return levelList;
     }
 
+    /**缴费档次*/
+    public List<BaseData> getPayedLevel(boolean high) {
+        List<BaseData> levelList = mBaseDataRepository.getPayedLevel(high ? Constants.PAY_HIGH_LEVEL_KEY : Constants.PAY_LOW_LEVEL_KEY);
+        if (levelList != null) {
+            Collections.sort(levelList, new Comparator<BaseData>() {
+                @Override
+                public int compare(BaseData lhs, BaseData rhs) {
+                    try {
+                        int left = Integer.parseInt(lhs.value);
+                        int right = Integer.parseInt(rhs.value);
+                        if (left > right) {
+                            return  1;
+                        } else if (left < right) {
+                            return -1;
+                        }
+                    } catch (Exception e) {
+                        mLogger.debug(e.getMessage(), e);
+                    }
+                    return 0;
+                }
+            });
+        }
+        return levelList;
+    }
+
     /**医疗保险新参保缴费档次*/
     public List<BaseData> getYiliaoInsuredPayedLevel() {
         List<BaseData> levelList = mBaseDataRepository.getYiliaoInsuredPayedLevel();
