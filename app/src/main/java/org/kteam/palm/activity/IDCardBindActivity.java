@@ -2,6 +2,7 @@ package org.kteam.palm.activity;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -14,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+
 import org.apache.log4j.Logger;
 import org.kteam.common.network.volleyext.BaseResponse;
 import org.kteam.common.network.volleyext.RequestClient;
@@ -25,6 +28,7 @@ import org.kteam.palm.common.utils.Constants;
 import org.kteam.palm.common.utils.IDCardUtils;
 import org.kteam.palm.common.utils.SharedPreferencesUtils;
 import org.kteam.palm.common.utils.UserStateUtils;
+import org.kteam.palm.common.utils.VCodeImageUtils;
 import org.kteam.palm.model.User;
 import org.kteam.palm.network.NetworkUtils;
 import org.kteam.palm.network.response.UserResponse;
@@ -51,6 +55,8 @@ public class IDCardBindActivity extends BaseActivity implements View.OnClickList
     private TextView mTvPhone;
     private Button mBtnCode;
     private Button mBtnOk;
+    private EditText mEtImgCode;
+    private SimpleDraweeView mSdv;
 
     private Timer mTimer;
     private boolean mIsSendingCode = false;
@@ -69,7 +75,7 @@ public class IDCardBindActivity extends BaseActivity implements View.OnClickList
                         return;
                     }
                     mIsSendingCode = true;
-                    mBtnCode.setText(getString(R.string.code_sent, mTimeCount));
+                    mBtnCode.setText(getString(R.string.code_sent, String.valueOf(mTimeCount)));
                     mBtnCode.setTextColor(getResources().getColor(R.color.code_unable_get));
                     break;
                 case FLAG_COUNT_FINISH:
@@ -119,6 +125,32 @@ public class IDCardBindActivity extends BaseActivity implements View.OnClickList
         mEtIDCard.addTextChangedListener(myTextWatcher);
         mEtUserName.addTextChangedListener(myTextWatcher);
         mEtAuthCode.addTextChangedListener(myTextWatcher);
+
+        mEtImgCode = findView(R.id.et_img_code);
+        mSdv = findView(R.id.sdv);
+        mSdv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getImgCode(true);
+            }
+        });
+        getImgCode(false);
+    }
+
+    private void getImgCode(boolean showLoadingDialog) {
+        VCodeImageUtils.getVCodeImg(this, new VCodeImageUtils.VCodeImgCallback() {
+            @Override
+            public void onResult(String imgUrl) {
+                Uri uri = Uri.parse(imgUrl);
+                mSdv.setImageURI(uri);
+            }
+
+            @Override
+            public void onError() {
+                Uri uri = Uri.parse("err");
+                mSdv.setImageURI(uri);
+            }
+        }, showLoadingDialog);
     }
 
     @Override
@@ -126,7 +158,7 @@ public class IDCardBindActivity extends BaseActivity implements View.OnClickList
         super.onResume();
         mIsPause = false;
         if (mIsSendingCode) {
-            mBtnCode.setText(getString(R.string.code_sent, mTimeCount));
+            mBtnCode.setText(getString(R.string.code_sent, String.valueOf(mTimeCount)));
             mBtnCode.setTextColor(getResources().getColor(R.color.code_unable_get));
         } else {
             mBtnCode.setText(R.string.get_msg_code);
@@ -209,11 +241,19 @@ public class IDCardBindActivity extends BaseActivity implements View.OnClickList
             return;
         }
 
+        String imgCode = mEtImgCode.getText().toString();
+        if (TextUtils.isEmpty(imgCode)) {
+            ViewUtils.showToast(this, R.string.pls_input_img_code);
+            return;
+        }
+
         startCount();
 
         HashMap<String, String> paramMap = new HashMap<String, String>();
         paramMap.put("phone", mUser.phone);
         paramMap.put("type", String.valueOf(Constants.CODE_TYPE_BIND));
+        paramMap.put("unique", SharedPreferencesUtils.getInstance().getUUID());
+        paramMap.put("vcode", mEtImgCode.getText().toString());
         String token = NetworkUtils.getToken(this, paramMap, Constants.URL_SEND_CODE);
         paramMap.put("token", token);
 

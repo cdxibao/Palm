@@ -1,6 +1,7 @@
 package org.kteam.palm.activity;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -12,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.apache.log4j.Logger;
 import org.kteam.common.network.volleyext.BaseResponse;
@@ -26,6 +29,7 @@ import org.kteam.palm.common.utils.Constants;
 import org.kteam.palm.common.utils.IDCardUtils;
 import org.kteam.palm.common.utils.SharedPreferencesUtils;
 import org.kteam.palm.common.utils.UserStateUtils;
+import org.kteam.palm.common.utils.VCodeImageUtils;
 import org.kteam.palm.common.view.SwitchButton;
 import org.kteam.palm.network.NetworkUtils;
 import org.kteam.palm.network.response.UserResponse;
@@ -58,6 +62,8 @@ public class RegisterStep2Activity extends BaseActivity implements View.OnClickL
     private EditText mEtIdCard;
     private Button mBtnCode;
     private Button mBtnRegister;
+    private EditText mEtImgCode;
+    private SimpleDraweeView mSdv;
     private boolean mRegistinng;
 
     private Timer mTimer;
@@ -75,7 +81,7 @@ public class RegisterStep2Activity extends BaseActivity implements View.OnClickL
                         return;
                     }
                     mIsSendingCode = true;
-                    mBtnCode.setText(getString(R.string.code_sent, mTimeCount));
+                    mBtnCode.setText(getString(R.string.code_sent, String.valueOf(mTimeCount)));
                     mBtnCode.setTextColor(getResources().getColor(R.color.code_unable_get));
                     break;
                 case FLAG_COUNT_FINISH:
@@ -105,7 +111,7 @@ public class RegisterStep2Activity extends BaseActivity implements View.OnClickL
         initView();
 
         mIsSendingCode = true;
-        mBtnCode.setText(getString(R.string.code_sent, mTimeCount));
+        mBtnCode.setText(getString(R.string.code_sent, String.valueOf(mTimeCount)));
         mBtnCode.setTextColor(getResources().getColor(R.color.code_unable_get));
         startCount();
     }
@@ -121,7 +127,7 @@ public class RegisterStep2Activity extends BaseActivity implements View.OnClickL
         super.onResume();
         mIsPause = false;
         if (mIsSendingCode) {
-            mBtnCode.setText(getString(R.string.code_sent, mTimeCount));
+            mBtnCode.setText(getString(R.string.code_sent, String.valueOf(mTimeCount)));
             mBtnCode.setTextColor(getResources().getColor(R.color.code_unable_get));
         } else {
             mBtnCode.setText(R.string.get_msg_code);
@@ -157,6 +163,32 @@ public class RegisterStep2Activity extends BaseActivity implements View.OnClickL
                 mEtPasswd.setSelection(mEtPasswd.getText().length());
             }
         });
+
+        mEtImgCode = findView(R.id.et_img_code);
+        mSdv = findView(R.id.sdv);
+        mSdv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getImgCode(true);
+            }
+        });
+        getImgCode(false);
+    }
+
+    private void getImgCode(boolean showLoadingDialog) {
+        VCodeImageUtils.getVCodeImg(this, new VCodeImageUtils.VCodeImgCallback() {
+            @Override
+            public void onResult(String imgUrl) {
+                Uri uri = Uri.parse(imgUrl);
+                mSdv.setImageURI(uri);
+            }
+
+            @Override
+            public void onError() {
+                Uri uri = Uri.parse("err");
+                mSdv.setImageURI(uri);
+            }
+        }, showLoadingDialog);
     }
 
     @Override
@@ -335,8 +367,14 @@ public class RegisterStep2Activity extends BaseActivity implements View.OnClickL
                     return;
                 }
 
+                String imgCode = mEtImgCode.getText().toString();
+                if (TextUtils.isEmpty(imgCode)) {
+                    ViewUtils.showToast(this, R.string.pls_input_img_code);
+                    return;
+                }
+
                 mIsSendingCode = true;
-                mBtnCode.setText(getString(R.string.code_sent, mTimeCount));
+                mBtnCode.setText(getString(R.string.code_sent, String.valueOf(mTimeCount)));
                 mBtnCode.setTextColor(getResources().getColor(R.color.code_unable_get));
                 startCount();
                 sendMsgCode(mPhone);
@@ -353,6 +391,8 @@ public class RegisterStep2Activity extends BaseActivity implements View.OnClickL
         HashMap<String, String> paramMap = new HashMap<String, String>();
         paramMap.put("phone", phone);
         paramMap.put("type", String.valueOf(Constants.CODE_TYPE_REGISTER));
+        paramMap.put("unique", SharedPreferencesUtils.getInstance().getUUID());
+        paramMap.put("vcode", mEtImgCode.getText().toString());
         String token = NetworkUtils.getToken(this, paramMap, Constants.URL_SEND_CODE);
         paramMap.put("token", token);
 

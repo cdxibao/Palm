@@ -9,6 +9,9 @@ import org.apache.log4j.Logger;
 import org.kteam.palm.BaseApplication;
 import org.kteam.palm.model.User;
 
+import java.util.Random;
+import java.util.UUID;
+
 /**
  * @Package org.kteam.common.utils
  * @Project Palm
@@ -23,6 +26,7 @@ public class SharedPreferencesUtils {
 
     private static SharedPreferencesUtils instance = null;
     private SharedPreferences mSharedPreferences;
+    private String mUUID;
 
     private SharedPreferencesUtils() {
         mSharedPreferences = BaseApplication.getContext().getSharedPreferences(Constants.SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
@@ -88,5 +92,24 @@ public class SharedPreferencesUtils {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString("user", "");
         editor.commit();
+    }
+
+    public String getUUID() {
+        if (!TextUtils.isEmpty(mUUID)) return mUUID;
+        mUUID = mSharedPreferences.getString("uuid", "");
+        if (!TextUtils.isEmpty(mUUID)) return mUUID;
+        try {
+            mUUID = UUID.randomUUID().toString().replaceAll("-", "");
+        } catch (Exception e) {
+
+        }
+        if (TextUtils.isEmpty(mUUID)) {
+            int rand = new Random().nextInt(90000) + 10000;
+            mUUID = String.valueOf(System.currentTimeMillis())  + rand;
+        }
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString("uuid", mUUID);
+        editor.commit();
+        return mUUID;
     }
 }

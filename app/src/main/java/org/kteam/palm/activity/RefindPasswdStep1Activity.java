@@ -2,6 +2,7 @@ package org.kteam.palm.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.apache.log4j.Logger;
 import org.kteam.common.network.volleyext.BaseResponse;
@@ -20,6 +23,8 @@ import org.kteam.palm.BaseActivity;
 import org.kteam.palm.BaseApplication;
 import org.kteam.palm.R;
 import org.kteam.palm.common.utils.Constants;
+import org.kteam.palm.common.utils.SharedPreferencesUtils;
+import org.kteam.palm.common.utils.VCodeImageUtils;
 import org.kteam.palm.network.NetworkUtils;
 
 import java.util.HashMap;
@@ -41,6 +46,8 @@ public class RefindPasswdStep1Activity extends BaseActivity implements View.OnCl
 
     private EditText mEtPhone;
     private Button mBtnSendCode;
+    private EditText mEtImgCode;
+    private SimpleDraweeView mSdv;
     private boolean mNetworking;
 
     @Override
@@ -78,6 +85,32 @@ public class RefindPasswdStep1Activity extends BaseActivity implements View.OnCl
 
         mBtnSendCode = findView(R.id.btn_send_code);
         mBtnSendCode.setOnClickListener(this);
+
+        mEtImgCode = findView(R.id.et_img_code);
+        mSdv = findView(R.id.sdv);
+        mSdv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getImgCode(true);
+            }
+        });
+        getImgCode(false);
+    }
+
+    private void getImgCode(boolean showLoadingDialog) {
+        VCodeImageUtils.getVCodeImg(this, new VCodeImageUtils.VCodeImgCallback() {
+            @Override
+            public void onResult(String imgUrl) {
+                Uri uri = Uri.parse(imgUrl);
+                mSdv.setImageURI(uri);
+            }
+
+            @Override
+            public void onError() {
+                Uri uri = Uri.parse("err");
+                mSdv.setImageURI(uri);
+            }
+        }, showLoadingDialog);
     }
 
     @Override
@@ -109,6 +142,13 @@ public class RefindPasswdStep1Activity extends BaseActivity implements View.OnCl
                     ViewUtils.showToast(this, R.string.input_tip_tel_length_error);
                     return;
                 }
+
+                String imgCode = mEtImgCode.getText().toString();
+                if (TextUtils.isEmpty(imgCode)) {
+                    ViewUtils.showToast(this, R.string.pls_input_img_code);
+                    return;
+                }
+
                 if (mNetworking) return;
                 sendMsgCode(phone);
             default:
@@ -121,6 +161,8 @@ public class RefindPasswdStep1Activity extends BaseActivity implements View.OnCl
         HashMap<String, String> paramMap = new HashMap<String, String>();
         paramMap.put("phone", phone);
         paramMap.put("type", String.valueOf(Constants.CODE_TYPE_REFIND_PWD));
+        paramMap.put("unique", SharedPreferencesUtils.getInstance().getUUID());
+        paramMap.put("vcode", mEtImgCode.getText().toString());
         String token = NetworkUtils.getToken(this, paramMap, Constants.URL_SEND_CODE);
         paramMap.put("token", token);
 

@@ -1,6 +1,7 @@
 package org.kteam.palm.activity;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.apache.log4j.Logger;
 import org.kteam.common.network.volleyext.BaseResponse;
@@ -21,6 +24,8 @@ import org.kteam.palm.BaseActivity;
 import org.kteam.palm.BaseApplication;
 import org.kteam.palm.R;
 import org.kteam.palm.common.utils.Constants;
+import org.kteam.palm.common.utils.SharedPreferencesUtils;
+import org.kteam.palm.common.utils.VCodeImageUtils;
 import org.kteam.palm.common.view.SwitchButton;
 import org.kteam.palm.network.NetworkUtils;
 
@@ -43,6 +48,8 @@ public class RefindPasswdStep2Activity extends BaseActivity implements View.OnCl
     private TextView mTvPhone;
     private EditText mEtPasswd;
     private EditText mEtAuthCode;
+    private EditText mEtImgCode;
+    private SimpleDraweeView mSdv;
     private Button mBtnCode;
 
     private Timer mTimer;
@@ -63,7 +70,7 @@ public class RefindPasswdStep2Activity extends BaseActivity implements View.OnCl
                         return;
                     }
                     mIsSendingCode = true;
-                    mBtnCode.setText(getString(R.string.code_sent, mTimeCount));
+                    mBtnCode.setText(getString(R.string.code_sent, String.valueOf(mTimeCount)));
                     mBtnCode.setTextColor(getResources().getColor(R.color.code_unable_get));
                     break;
                 case FLAG_COUNT_FINISH:
@@ -93,7 +100,7 @@ public class RefindPasswdStep2Activity extends BaseActivity implements View.OnCl
         }
         initView();
         mIsSendingCode = true;
-        mBtnCode.setText(getString(R.string.code_sent, mTimeCount));
+        mBtnCode.setText(getString(R.string.code_sent, String.valueOf(mTimeCount)));
         mBtnCode.setTextColor(getResources().getColor(R.color.code_unable_get));
         startCount();
     }
@@ -116,6 +123,32 @@ public class RefindPasswdStep2Activity extends BaseActivity implements View.OnCl
             }
         });
         mTvPhone.setText(mPhone);
+
+        mEtImgCode = findView(R.id.et_img_code);
+        mSdv = findView(R.id.sdv);
+        mSdv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getImgCode(true);
+            }
+        });
+        getImgCode(false);
+    }
+
+    private void getImgCode(boolean showLoadingDialog) {
+        VCodeImageUtils.getVCodeImg(this, new VCodeImageUtils.VCodeImgCallback() {
+            @Override
+            public void onResult(String imgUrl) {
+                Uri uri = Uri.parse(imgUrl);
+                mSdv.setImageURI(uri);
+            }
+
+            @Override
+            public void onError() {
+                Uri uri = Uri.parse("err");
+                mSdv.setImageURI(uri);
+            }
+        }, showLoadingDialog);
     }
 
     @Override
@@ -123,7 +156,7 @@ public class RefindPasswdStep2Activity extends BaseActivity implements View.OnCl
         super.onResume();
         mIsPause = false;
         if (mIsSendingCode) {
-            mBtnCode.setText(getString(R.string.code_sent, mTimeCount));
+            mBtnCode.setText(getString(R.string.code_sent, String.valueOf(mTimeCount)));
             mBtnCode.setTextColor(getResources().getColor(R.color.code_unable_get));
         } else {
             mBtnCode.setText(R.string.get_msg_code);
@@ -246,6 +279,8 @@ public class RefindPasswdStep2Activity extends BaseActivity implements View.OnCl
         HashMap<String, String> paramMap = new HashMap<String, String>();
         paramMap.put("phone", phone);
         paramMap.put("type", String.valueOf(Constants.CODE_TYPE_REFIND_PWD));
+        paramMap.put("unique", SharedPreferencesUtils.getInstance().getUUID());
+        paramMap.put("vcode", mEtImgCode.getText().toString());
         String token = NetworkUtils.getToken(this, paramMap, Constants.URL_SEND_CODE);
         paramMap.put("token", token);
 
@@ -294,6 +329,13 @@ public class RefindPasswdStep2Activity extends BaseActivity implements View.OnCl
                     ViewUtils.showToast(this, R.string.input_tip_tel_length_error);
                     return;
                 }
+
+                String imgCode = mEtImgCode.getText().toString();
+                if (TextUtils.isEmpty(imgCode)) {
+                    ViewUtils.showToast(this, R.string.pls_input_img_code);
+                    return;
+                }
+
                 mIsSendingCode = true;
                 mBtnCode.setText(getString(R.string.code_sent, mTimeCount));
                 mBtnCode.setTextColor(getResources().getColor(R.color.code_unable_get));

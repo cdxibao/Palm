@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_bg"
     android:layout_gravity="start"
+    android:background="@color/main_bg"
     android:orientation="vertical"
     android:paddingTop="0dp">
 
@@ -15,58 +14,123 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginTop="30dp"
-        android:background="@color/line"/>
-    <LinearLayout
+        android:background="@color/line" />
+
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
+        android:orientation="vertical">
+
+        <TableRow
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16dp"
-            android:textColor="@color/colorPrimary"
-            android:gravity="center"
-            android:text="@string/tel_num" />
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="5dp">
 
-        <EditText
-            android:id="@+id/et_tel"
-            style="@style/edit_text_unline"
-            android:layout_weight="1"
-            android:background="@null"
-            android:hint="@string/pls_input_tel"
-            android:textColorHint="@color/line"
-            android:inputType="number"
-            android:maxLength="11"
-            android:paddingBottom="15dp"
-            android:paddingTop="15dp"
-            android:singleLine="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/tel_num"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16dp" />
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/et_tel"
+                style="@style/edit_text_unline"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/pls_input_tel"
+                android:inputType="number"
+                android:maxLength="11"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:singleLine="true"
+                android:textColorHint="@color/line" />
+
+        </TableRow>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@drawable/line_padding_left_15" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="@string/img_code"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/sdv"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    app:actualImageScaleType="centerInside" />
+
+                <EditText
+                    android:id="@+id/et_img_code"
+                    style="@style/edit_text_unline"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="@string/pls_input_img_code"
+                    android:maxLength="8"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:singleLine="true"
+                    android:textColorHint="@color/line"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+
+        </TableRow>
+    </TableLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/line"/>
+        android:background="@color/line" />
+
     <org.kteam.palm.common.view.TipTextView
         android:id="@+id/tv_tip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:lineSpacingExtra="5dp"
-        app:leftIcon="@mipmap/tip"
         android:text="@string/register_phone_tip"
         android:textColor="@color/article_content"
-        android:textSize="14dp"/>
+        android:textSize="14dp"
+        app:leftIcon="@mipmap/tip" />
+
     <Button
         android:id="@+id/btn_send_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="50dp"
-        android:gravity="center"
+        android:layout_marginRight="15dp"
         android:background="@drawable/login_button_selector"
+        android:gravity="center"
         android:padding="10dp"
         android:text="@string/get_msg_code"
         android:textColor="@color/white"

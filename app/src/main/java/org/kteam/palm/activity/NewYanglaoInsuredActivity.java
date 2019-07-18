@@ -1,6 +1,7 @@
 package org.kteam.palm.activity;
 
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -9,6 +10,9 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.facebook.drawee.view.SimpleDraweeView;
+
 import org.apache.log4j.Logger;
 import org.kteam.common.network.volleyext.BaseResponse;
 import org.kteam.common.network.volleyext.RequestClient;
@@ -20,7 +24,9 @@ import org.kteam.palm.BaseApplication;
 import org.kteam.palm.R;
 import org.kteam.palm.common.utils.Constants;
 import org.kteam.palm.common.utils.IDCardUtils;
+import org.kteam.palm.common.utils.SharedPreferencesUtils;
 import org.kteam.palm.common.utils.UserStateUtils;
+import org.kteam.palm.common.utils.VCodeImageUtils;
 import org.kteam.palm.common.view.SpinnerEditText;
 import org.kteam.palm.domain.manager.BaseDataManager;
 import org.kteam.palm.model.BaseData;
@@ -55,6 +61,8 @@ public class NewYanglaoInsuredActivity extends BaseActivity implements View.OnCl
     private EditText mEtRegisteredResidence;
     private EditText mEtMsgCode;
     private EditText mEtPhone;
+    private EditText mEtImgCode;
+    private SimpleDraweeView mSdv;
 //    private SpinnerEditText mSetNation;
     private Button mBtnCode;
     private OptionsPickerView<BaseData> mPvOptionsNation;
@@ -76,7 +84,7 @@ public class NewYanglaoInsuredActivity extends BaseActivity implements View.OnCl
                         return;
                     }
                     mIsSendingCode = true;
-                    mBtnCode.setText(getString(R.string.code_sent, mTimeCount));
+                    mBtnCode.setText(getString(R.string.code_sent, String.valueOf(mTimeCount)));
                     mBtnCode.setTextColor(getResources().getColor(R.color.code_unable_get));
                     break;
                 case FLAG_COUNT_FINISH:
@@ -89,8 +97,6 @@ public class NewYanglaoInsuredActivity extends BaseActivity implements View.OnCl
                     break;
             }
         }
-
-        ;
     };
 
     @Override
@@ -110,7 +116,7 @@ public class NewYanglaoInsuredActivity extends BaseActivity implements View.OnCl
         mIsPause = false;
         setOkButtonBg();
         if (mIsSendingCode) {
-            mBtnCode.setText(getString(R.string.code_sent, mTimeCount));
+            mBtnCode.setText(getString(R.string.code_sent, String.valueOf(mTimeCount)));
             mBtnCode.setTextColor(getResources().getColor(R.color.code_unable_get));
         } else {
             mBtnCode.setText(R.string.get_msg_code);
@@ -178,6 +184,32 @@ public class NewYanglaoInsuredActivity extends BaseActivity implements View.OnCl
 //            }
 //        });
         mProgressHUD = new ProgressHUD(this);
+
+        mEtImgCode = findView(R.id.et_img_code);
+        mSdv = findView(R.id.sdv);
+        mSdv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getImgCode(true);
+            }
+        });
+        getImgCode(false);
+    }
+
+    private void getImgCode(boolean showLoadingDialog) {
+        VCodeImageUtils.getVCodeImg(this, new VCodeImageUtils.VCodeImgCallback() {
+            @Override
+            public void onResult(String imgUrl) {
+                Uri uri = Uri.parse(imgUrl);
+                mSdv.setImageURI(uri);
+            }
+
+            @Override
+            public void onError() {
+                Uri uri = Uri.parse("err");
+                mSdv.setImageURI(uri);
+            }
+        }, showLoadingDialog);
     }
 
     private void startCount() {
@@ -229,9 +261,14 @@ public class NewYanglaoInsuredActivity extends BaseActivity implements View.OnCl
                 if (mIsSendingCode) {
                     return;
                 }
+                String imgCode = mEtImgCode.getText().toString();
+                if (TextUtils.isEmpty(imgCode)) {
+                    ViewUtils.showToast(this, R.string.pls_input_img_code);
+                    return;
+                }
 
                 mIsSendingCode = true;
-                mBtnCode.setText(getString(R.string.code_sent, mTimeCount));
+                mBtnCode.setText(getString(R.string.code_sent, String.valueOf(mTimeCount)));
                 mBtnCode.setTextColor(getResources().getColor(R.color.code_unable_get));
                 startCount();
 
@@ -261,6 +298,8 @@ public class NewYanglaoInsuredActivity extends BaseActivity implements View.OnCl
         HashMap<String, String> paramMap = new HashMap<String, String>();
         paramMap.put("phone", phone);
         paramMap.put("type", String.valueOf(Constants.CODE_TYPE_RPERSON_INSURANCE));
+        paramMap.put("unique", SharedPreferencesUtils.getInstance().getUUID());
+        paramMap.put("vcode", mEtImgCode.getText().toString());
         String token = NetworkUtils.getToken(this, paramMap, Constants.URL_SEND_CODE);
         paramMap.put("token", token);
 

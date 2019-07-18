@@ -1,5 +1,6 @@
 package org.kteam.palm.activity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+
 import org.apache.log4j.Logger;
 import org.kteam.common.network.volleyext.BaseResponse;
 import org.kteam.common.network.volleyext.RequestClient;
@@ -19,7 +22,9 @@ import org.kteam.palm.BaseActivity;
 import org.kteam.palm.BaseApplication;
 import org.kteam.palm.R;
 import org.kteam.palm.common.utils.Constants;
+import org.kteam.palm.common.utils.SharedPreferencesUtils;
 import org.kteam.palm.common.utils.UserStateUtils;
+import org.kteam.palm.common.utils.VCodeImageUtils;
 import org.kteam.palm.network.NetworkUtils;
 import org.kteam.palm.network.response.UserResponse;
 
@@ -44,12 +49,15 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
 
     private EditText mEtPhone;
     private EditText mEtNewPhone;
+    private EditText mEtImgCode;
+    private SimpleDraweeView mSdv;
     private EditText mEtMsgCode;
     private EditText mEtContactAddr;
     private View mLayoutAddress;
     private View mLineAdrress;
     private Button mBtnCode;
     private Button mBtnOk;
+
     private boolean mUpdating;
 
     private Timer mTimer;
@@ -67,7 +75,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
                         return;
                     }
                     mIsSendingCode = true;
-                    mBtnCode.setText(getString(R.string.code_sent, mTimeCount));
+                    mBtnCode.setText(getString(R.string.code_sent, String.valueOf(mTimeCount)));
                     mBtnCode.setTextColor(getResources().getColor(R.color.code_unable_get));
                     break;
                 case FLAG_COUNT_FINISH:
@@ -79,7 +87,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
                 default:
                     break;
             }
-        };
+        }
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +110,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
         super.onResume();
         mIsPause = false;
         if (mIsSendingCode) {
-            mBtnCode.setText(getString(R.string.code_sent, mTimeCount));
+            mBtnCode.setText(getString(R.string.code_sent, String.valueOf(mTimeCount)));
             mBtnCode.setTextColor(getResources().getColor(R.color.code_unable_get));
         } else {
             mBtnCode.setText(R.string.get_msg_code);
@@ -117,6 +125,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
         mEtPhone.setText(mUser.phone);
         mEtPhone.setEnabled(false);
         mEtNewPhone = findView(R.id.et_new_phone);
+        mEtImgCode = findView(R.id.et_img_code);
         mEtMsgCode = findView(R.id.et_msg_code);
         mEtContactAddr = findView(R.id.et_new_address);
         mEtContactAddr.setText(mUser.address);
@@ -139,6 +148,31 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
             mLineAdrress.setVisibility(View.GONE);
             setTitleText(getString(R.string.update_phone));
         }
+
+        mSdv = findView(R.id.sdv);
+        mSdv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getImgCode(true);
+            }
+        });
+        getImgCode(false);
+    }
+
+    private void getImgCode(boolean showLoadingDialog) {
+        VCodeImageUtils.getVCodeImg(this, new VCodeImageUtils.VCodeImgCallback() {
+            @Override
+            public void onResult(String imgUrl) {
+                Uri uri = Uri.parse(imgUrl);
+                mSdv.setImageURI(uri);
+            }
+
+            @Override
+            public void onError() {
+                Uri uri = Uri.parse("err");
+                mSdv.setImageURI(uri);
+            }
+        }, showLoadingDialog);
     }
 
     private void setOkButtonBg() {
@@ -269,6 +303,12 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
             return false;
         }
 
+        String imgCode = mEtImgCode.getText().toString();
+        if (TextUtils.isEmpty(imgCode)) {
+            ViewUtils.showToast(this, R.string.pls_input_img_code);
+            return false;
+        }
+
         if (!StringUtils.isValidPhone(newPhone)) {
             ViewUtils.showToast(this, R.string.input_tip_new_tel_length_error);
             return false;
@@ -294,7 +334,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
                     return;
                 }
                 mIsSendingCode = true;
-                mBtnCode.setText(getString(R.string.code_sent, mTimeCount));
+                mBtnCode.setText(getString(R.string.code_sent, String.valueOf(mTimeCount)));
                 mBtnCode.setTextColor(getResources().getColor(R.color.code_unable_get));
                 startCount();
                 mNewPhone = mEtNewPhone.getText().toString();
@@ -309,9 +349,12 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
     }
 
     private void sendMsgCode(String phone) {
+        final String imgCode = mEtImgCode.getText().toString();
         HashMap<String, String> paramMap = new HashMap<String, String>();
         paramMap.put("phone", phone);
         paramMap.put("type", String.valueOf(Constants.CODE_TYPE_UPDATE));
+        paramMap.put("unique", SharedPreferencesUtils.getInstance().getUUID());
+        paramMap.put("vcode", imgCode);
         String token = NetworkUtils.getToken(this, paramMap, Constants.URL_SEND_CODE);
         paramMap.put("token", token);
 
