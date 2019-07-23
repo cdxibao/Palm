@@ -23,8 +23,8 @@ import java.util.HashMap;
 public class VCodeImageUtils {
 
     public static void getVCodeImg(Context context, final VCodeImgCallback callback, boolean showLoadingDialog) {
-        int width = ViewUtils.dip2px(context, 80);
-        int height = ViewUtils.dip2px(context, 30);
+        final int width = ViewUtils.dip2px(context, 72);
+        final int height = ViewUtils.dip2px(context, 24);
 
         HashMap<String, String> paramMap = new HashMap<>();
         paramMap.put("unique", SharedPreferencesUtils.getInstance().getUUID());
@@ -40,6 +40,8 @@ public class VCodeImageUtils {
             public void onLoadComplete(VCodeImgResponse response) {
                 if (response.code == 0 && response.body != null && !TextUtils.isEmpty(response.body.get("vcode_src"))) {
                     String imgUrl = response.body.get("vcode_src");
+                    System.out.println("DDD " + width + " " + height);
+                    System.out.println("DDD " + imgUrl);
                     if (callback != null) {
                         callback.onResult(imgUrl);
                         return;

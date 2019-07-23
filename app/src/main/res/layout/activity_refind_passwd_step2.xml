@@ -88,13 +88,13 @@
                     android:orientation="horizontal">
                     <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/sdv"
-                        android:layout_width="80dp"
-                        android:layout_height="30dp"
-                        app:actualImageScaleType="centerInside" />
+                        android:layout_width="72dp"
+                        android:layout_height="24dp"
+                        app:actualImageScaleType="fitXY" />
                     <EditText
                         android:id="@+id/et_img_code"
                         style="@style/edit_text_unline"
-                        android:textSize="18dp"
+                        android:textSize="16dp"
                         android:layout_weight="1"
                         android:background="@null"
                         android:hint="@string/pls_input_img_code"

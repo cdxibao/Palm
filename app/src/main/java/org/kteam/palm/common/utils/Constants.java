@@ -47,9 +47,9 @@ public class Constants {
     public static final int BUTTON_UNABLE_ALPHA = 100;
 
     //网络访问URL
-//    public static final String BASE_URL = "http://api.sclzsi.cn/"; //"http://api.kteam.cn/";//http://192.168.0.102:8080/";
+    public static final String BASE_URL = "http://api.sclzsi.cn/"; //"http://api.kteam.cn/";//http://192.168.0.102:8080/";
 //        public static final String BASE_URL = "http://pengqi.51vip.biz:20035/";
-    public static final String BASE_URL = "http://scbaigu.wicp.vip/";
+//    public static final String BASE_URL = "http://scbaigu.wicp.vip/";
     public static final String URL_GET_DICT = "api/base/get/increment/dict";
     public static final String URL_GET_AD = "api/info/get/indexImg";
     public static final String URL_GET_MODULE = "api/info/get/category";

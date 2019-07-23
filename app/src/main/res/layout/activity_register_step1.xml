@@ -84,9 +84,9 @@
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/sdv"
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
-                    app:actualImageScaleType="centerInside" />
+                    android:layout_width="72dp"
+                    android:layout_height="24dp"
+                    app:actualImageScaleType="fitXY" />
 
                 <EditText
                     android:id="@+id/et_img_code"
@@ -99,7 +99,7 @@
                     android:paddingBottom="15dp"
                     android:singleLine="true"
                     android:textColorHint="@color/line"
-                    android:textSize="18dp" />
+                    android:textSize="16dp" />
             </LinearLayout>
 
 
