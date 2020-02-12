@@ -9,7 +9,15 @@
     android:paddingTop="0dp">
 
     <include layout="@layout/view_toolbar" />
-
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@null"
+        android:indeterminateOnly="false"
+        android:max="100"
+        android:progressDrawable="@drawable/progress_bar_horizontal" />
     <WebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"

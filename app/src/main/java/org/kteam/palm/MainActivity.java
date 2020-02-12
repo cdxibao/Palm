@@ -557,7 +557,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 mDrawerLayout.openDrawer(GravityCompat.START);
             }
         } else if (Module.ModuleType.BM_SERVICE.equals(module.sys_flag)) {
-            startActivity(new Intent(this, BmServiceActivity.class));
+            Intent intent = new Intent(this, BmServiceActivity.class);
+            intent.putExtra("screenWidth", ViewUtils.getScreenInfo(this).widthPixels);
+            startActivity(intent);
         } else if (module.wz_flag > 0) {
             Intent intent = new Intent(this, ArticleTypeActivity.class);
             intent.putExtra("title", module.name);

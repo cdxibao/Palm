@@ -12,7 +12,7 @@
                     android:centerColor="@color/progress2"
                     android:centerY="0.75"
                     android:endColor="@color/progress3"
-                    android:startColor="@color/progress1" />
+                    android:startColor="@color/colorPrimary" />
             </shape>
         </clip>
     </item>

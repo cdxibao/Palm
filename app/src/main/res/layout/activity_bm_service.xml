@@ -9,7 +9,10 @@
     android:paddingTop="0dp">
 
     <include layout="@layout/view_toolbar" />
-
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
     <LinearLayout
         android:id="@+id/ll_jh_bm_service"
         android:layout_width="match_parent"

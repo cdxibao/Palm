@@ -138,7 +138,10 @@
             android:name="UMENG_APPKEY"
             android:value="56f788d967e58e021a0008c6" >
         </meta-data>
-
+        <!--全面屏适配 -->
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.4" />
     </application>
 
 </manifest>

@@ -1,6 +1,5 @@
 package org.kteam.palm.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -9,8 +8,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import org.apache.log4j.Logger;
 import org.kteam.common.network.volleyext.BaseResponse;
@@ -21,11 +18,8 @@ import org.kteam.palm.BaseActivity;
 import org.kteam.palm.BaseApplication;
 import org.kteam.palm.R;
 import org.kteam.palm.common.utils.Constants;
-import org.kteam.palm.common.utils.SharedPreferencesUtils;
-import org.kteam.palm.common.utils.UserStateUtils;
 import org.kteam.palm.common.view.SwitchButton;
 import org.kteam.palm.network.NetworkUtils;
-import org.kteam.palm.network.response.UserResponse;
 
 import java.util.HashMap;
 
