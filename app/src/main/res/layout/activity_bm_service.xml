@@ -11,13 +11,14 @@
     <include layout="@layout/view_toolbar" />
     <com.youth.banner.Banner
         android:id="@+id/banner"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
         android:layout_height="150dp" />
     <LinearLayout
         android:id="@+id/ll_jh_bm_service"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:padding="10dp">
@@ -45,9 +46,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="15dp"
         android:text="@string/bm_service_tip"
         android:textColor="@color/article_title"
         android:textSize="15dp" />
@@ -56,8 +57,8 @@
         android:id="@+id/sdv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         app:actualImageScaleType="centerInside" />
